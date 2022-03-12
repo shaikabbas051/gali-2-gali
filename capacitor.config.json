@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "Gali2Gali",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
