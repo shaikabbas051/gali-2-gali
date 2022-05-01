@@ -34,11 +34,11 @@ const Tab1: React.FC = () => {
             }}
           >
             {/* <Row> */}
-            <Row type="space-between">
+            <Row spaceBetween>
               <IonButton fill="clear" style={{ height: "auto" }}>
                 <IonIcon icon={menuOutline} />
               </IonButton>
-              <IonTitle>G2G</IonTitle>
+              <IonText>G2G</IonText>
               <IonButton fill="clear">
                 <IonIcon icon={notificationsOutline} color="#000" />
               </IonButton>
