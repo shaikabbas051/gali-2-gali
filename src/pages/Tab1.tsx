@@ -1,22 +1,77 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Tab1.css';
+import {
+  IonBackButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonIcon,
+  IonCard,
+  IonCardContent,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonText,
+  IonButton,
+} from "@ionic/react";
+import { menuOutline, notificationsOutline } from "ionicons/icons";
+import BarChart from "../components/BarChart";
+import ExploreContainer from "../components/ExploreContainer";
+import Row from "../components/Row";
+import "./Tab1.css";
 
 const Tab1: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Tab 1</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 1</IonTitle>
+      <IonContent>
+        <IonHeader>
+          <IonToolbar
+            color="#fff"
+            style={{
+              padding: 0,
+              height: 50,
+            }}
+          >
+            {/* <Row> */}
+            <Row type="space-between">
+              <IonButton fill="clear" style={{ height: "auto" }}>
+                <IonIcon icon={menuOutline} />
+              </IonButton>
+              <IonTitle>G2G</IonTitle>
+              <IonButton fill="clear">
+                <IonIcon icon={notificationsOutline} color="#000" />
+              </IonButton>
+            </Row>
+            {/* </Row> */}
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Tab 1 page" />
+        <div style={{ padding: "20px 10px" }}>
+          <IonText>Your Stats</IonText>
+          <div style={{ marginTop: 15 }}>
+            <div style={{ padding: 10, backgroundColor: "#1b4b58" }}>
+              <IonText color="light">April</IonText>
+              <br />
+              <IonText color="light">59%</IonText>
+            </div>
+            <div style={{ backgroundColor: "#37606b" }}>
+              <Row>
+                <div style={{ padding: 10, width: "50%" }}>
+                  <IonText color="light">Orders pending</IonText>
+                  <br />
+                  <IonText color="light">78</IonText>
+                </div>
+                <div style={{ padding: 10 }}>
+                  <IonText color="light">Orders completed</IonText>
+                  <br />
+                  <IonText color="light">123</IonText>
+                </div>
+              </Row>
+            </div>
+          </div>
+          <div style={{ height: 30 }} />
+          <BarChart />
+        </div>
       </IonContent>
     </IonPage>
   );

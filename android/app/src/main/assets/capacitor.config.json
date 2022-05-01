@@ -2,12 +2,5 @@
 	"appId": "io.ionic.starter",
 	"appName": "Gali2Gali",
 	"webDir": "build",
-	"bundledWebRuntime": false,
-	"sever": {
-		"url": "http://192.168.0.107:8100",
-		"clearText": true
-	},
-	"server": {
-		"url": "http://192.168.0.107:8100"
-	}
+	"bundledWebRuntime": false
 }
