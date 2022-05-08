@@ -1,0 +1,14 @@
+.add-item-content {
+  .image-wrapper {
+    width: 80vw;
+    height: 80vw;
+    border: solid 2px #ddd;
+    margin: auto;
+    display: flex;
+    align-items: flex-end;
+  }
+  .add-item-fab {
+    width: 100%;
+    padding: 10%;
+  }
+}
