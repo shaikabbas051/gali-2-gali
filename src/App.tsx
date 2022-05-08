@@ -16,8 +16,8 @@ import {
   personOutline,
   cashOutline,
 } from "ionicons/icons";
-import Tab1 from "./pages/Tab1";
-import Tab2 from "./pages/Tab2";
+import Home from "./pages/Home/Home";
+import InventoryList from "./pages/Inventory/InventoryList";
 import Tab3 from "./pages/Tab3";
 
 /* Core CSS required for Ionic components to work properly */
@@ -38,6 +38,8 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import { ItemDetails } from "./pages/Items/ItemDetails";
+import { AddItem } from "./pages/Items/AddItem";
 
 setupIonicReact();
 
@@ -46,36 +48,37 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route exact path="/tab1">
-            <Tab1 />
+          <Route exact path="/home">
+            <Home />
           </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
-          </Route>
-          <Route path="/tab3">
+          <Route exact path="/inventory" component={InventoryList} />
+          <Route exact path="/inventory/items/:id" component={ItemDetails} />
+          <Route exact path="/inventory/items/add" component={AddItem} />
+          <Route exact path="/inventory/items/edit/:id" component={AddItem} />
+          <Route path="/sales">
             <Tab3 />
           </Route>
-          <Route path="/tab4">
+          <Route path="/account">
             <Tab3 />
           </Route>
           <Route exact path="/">
-            <Redirect to="/tab1" />
+            <Redirect to="/home" />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom" color="#fff">
-          <IonTabButton tab="tab1" href="/tab1">
+          <IonTabButton tab="tab1" href="/home">
             <IonIcon icon={homeOutline} size={"small"} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
+          <IonTabButton tab="tab2" href="/inventory">
             <IonIcon icon={businessOutline} size={"small"} />
             <IonLabel>Inventory</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
+          <IonTabButton tab="tab3" href="/sales">
             <IonIcon icon={cashOutline} size={"small"} />
             <IonLabel>Sales</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab4" href="/tab4">
+          <IonTabButton tab="tab4" href="/account">
             <IonIcon icon={personOutline} size={"small"} />
             <IonLabel>Account</IonLabel>
           </IonTabButton>
