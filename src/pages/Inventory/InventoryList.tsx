@@ -84,7 +84,7 @@ export const sampleData: ISampleData[] = [
 const InventoryList: React.FC = (props: any) => {
   const handleClick = (itemId: string) => {
     props.history.push(`/inventory/items/${itemId}`);
-  }
+  };
 
   return (
     <IonPage>
@@ -118,7 +118,12 @@ const InventoryList: React.FC = (props: any) => {
               searchIcon="searchIcon"
             />
 
-            <IonIcon onClick={() => props.history.push("/inventory/items/add")} icon={addCircleOutline} size={"large"} color="grey" />
+            <IonIcon
+              onClick={() => props.history.push("/inventory/items/add")}
+              icon={addCircleOutline}
+              size={"large"}
+              color="grey"
+            />
           </Row>
           <FlatList
             list={sampleData}
@@ -133,8 +138,13 @@ const InventoryList: React.FC = (props: any) => {
                       />
                     </div>
                     <div>
-                      <IonText>{item.name}</IonText>
-                      <IonText>{item.description}</IonText>
+                      <IonText style={{ fontWeight: "bold" }}>
+                        {item.name}
+                      </IonText>
+                      <br />
+                      <IonText style={{ fontSize: 12, opacity: 0.8 }}>
+                        {item.description}
+                      </IonText>
                     </div>
                     <div>
                       <IonText>{item.quantity}</IonText>
