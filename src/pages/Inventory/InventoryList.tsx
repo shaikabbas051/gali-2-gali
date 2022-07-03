@@ -1,17 +1,9 @@
 import {
-  IonBackButton,
-  IonButtons,
   IonContent,
   IonHeader,
   IonPage,
-  IonTitle,
   IonToolbar,
   IonIcon,
-  IonCard,
-  IonCardContent,
-  IonGrid,
-  IonRow,
-  IonCol,
   IonText,
   IonButton,
   IonImg,
@@ -22,20 +14,20 @@ import {
   notificationsOutline,
   addCircleOutline,
 } from "ionicons/icons";
-import BarChart from "../components/BarChart";
-import Card from "../components/Card";
-import ExploreContainer from "../components/ExploreContainer";
-import FlatList from "../components/FlatList";
-import Row from "../components/Row";
-import "./Tab1.css";
+import Card from "../../components/Card";
+import FlatList from "../../components/FlatList";
+import Row from "../../components/Row";
 
-const sampleData: {
+export interface ISampleData {
+  id: string;
   image: string;
   name: string;
   description: string;
   quantity: number;
-}[] = [
+}
+export const sampleData: ISampleData[] = [
   {
+    id: "1",
     image:
       "https://www.bigbasket.com/media/uploads/p/l/30008604_2-sunfeast-dark-fantasy-bourbon-chocolate-cream-biscuits.jpg",
     name: "Bourbon",
@@ -44,6 +36,7 @@ const sampleData: {
     quantity: 5,
   },
   {
+    id: "2",
     image:
       "https://www.bigbasket.com/media/uploads/p/l/30008604_2-sunfeast-dark-fantasy-bourbon-chocolate-cream-biscuits.jpg",
     name: "Bourbon",
@@ -52,6 +45,7 @@ const sampleData: {
     quantity: 5,
   },
   {
+    id: "3",
     image:
       "https://www.bigbasket.com/media/uploads/p/l/30008604_2-sunfeast-dark-fantasy-bourbon-chocolate-cream-biscuits.jpg",
     name: "Bourbon",
@@ -60,6 +54,7 @@ const sampleData: {
     quantity: 5,
   },
   {
+    id: "4",
     image:
       "https://www.bigbasket.com/media/uploads/p/l/30008604_2-sunfeast-dark-fantasy-bourbon-chocolate-cream-biscuits.jpg",
     name: "Bourbon",
@@ -68,6 +63,7 @@ const sampleData: {
     quantity: 5,
   },
   {
+    id: "5",
     image:
       "https://www.bigbasket.com/media/uploads/p/l/30008604_2-sunfeast-dark-fantasy-bourbon-chocolate-cream-biscuits.jpg",
     name: "Bourbon",
@@ -76,6 +72,7 @@ const sampleData: {
     quantity: 5,
   },
   {
+    id: "6",
     image:
       "https://www.bigbasket.com/media/uploads/p/l/30008604_2-sunfeast-dark-fantasy-bourbon-chocolate-cream-biscuits.jpg",
     name: "Bourbon",
@@ -84,7 +81,11 @@ const sampleData: {
     quantity: 5,
   },
 ];
-const Tab2: React.FC = () => {
+const InventoryList: React.FC = (props: any) => {
+  const handleClick = (itemId: string) => {
+    props.history.push(`/inventory/items/${itemId}`);
+  };
+
   return (
     <IonPage>
       <IonContent>
@@ -117,13 +118,18 @@ const Tab2: React.FC = () => {
               searchIcon="searchIcon"
             />
 
-            <IonIcon icon={addCircleOutline} size={"large"} color="grey" />
+            <IonIcon
+              onClick={() => props.history.push("/inventory/items/add")}
+              icon={addCircleOutline}
+              size={"large"}
+              color="grey"
+            />
           </Row>
           <FlatList
             list={sampleData}
             renderItem={(item, idx) => {
               return (
-                <Card>
+                <Card deepProps={{ onClick: () => handleClick(item.id) }}>
                   <Row gap={20}>
                     <div>
                       <IonImg
@@ -132,8 +138,13 @@ const Tab2: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <IonText>{item.name}</IonText>
-                      <IonText>{item.description}</IonText>
+                      <IonText style={{ fontWeight: "bold" }}>
+                        {item.name}
+                      </IonText>
+                      <br />
+                      <IonText style={{ fontSize: 12, opacity: 0.8 }}>
+                        {item.description}
+                      </IonText>
                     </div>
                     <div>
                       <IonText>{item.quantity}</IonText>
@@ -149,4 +160,4 @@ const Tab2: React.FC = () => {
   );
 };
 
-export default Tab2;
+export default InventoryList;

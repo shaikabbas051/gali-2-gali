@@ -1,27 +1,18 @@
 import {
-  IonBackButton,
-  IonButtons,
   IonContent,
   IonHeader,
   IonPage,
-  IonTitle,
   IonToolbar,
   IonIcon,
-  IonCard,
-  IonCardContent,
-  IonGrid,
-  IonRow,
-  IonCol,
   IonText,
   IonButton,
 } from "@ionic/react";
 import { menuOutline, notificationsOutline } from "ionicons/icons";
-import BarChart from "../components/BarChart";
-import ExploreContainer from "../components/ExploreContainer";
-import Row from "../components/Row";
+import BarChart from "../../components/BarChart";
+import Row from "../../components/Row";
 import "./Tab1.css";
 
-const Tab1: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <IonPage>
       <IonContent>
@@ -77,4 +68,4 @@ const Tab1: React.FC = () => {
   );
 };
 
-export default Tab1;
+export default Home;
