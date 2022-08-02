@@ -40,7 +40,9 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 import { ItemDetails } from "./pages/Items/ItemDetails";
 import { AddItem } from "./pages/Items/AddItem";
-
+import SignUp from "./pages/Onboarding/Signup";
+import UserOnboarding from "./pages/Onboarding/UserOnboarding";
+import "./app.scss";
 setupIonicReact();
 
 const App: React.FC = () => (
@@ -55,6 +57,8 @@ const App: React.FC = () => (
           <Route exact path="/inventory/items/:id" component={ItemDetails} />
           <Route exact path="/inventory/items/add" component={AddItem} />
           <Route exact path="/inventory/items/edit/:id" component={AddItem} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/onboarding" component={UserOnboarding} />
           <Route path="/sales">
             <Tab3 />
           </Route>
