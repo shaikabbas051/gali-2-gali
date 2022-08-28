@@ -18,8 +18,12 @@ import {
   IonText,
   IonToolbar,
   SegmentChangeEventDetail,
+  useIonViewWillEnter,
 } from "@ionic/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getfromLocalDb, setToLocalDb } from "../../data/storage";
+
+const ONBOARDING_KEY = "onboarding";
 
 const CommonFab = () => {
   return (
@@ -30,12 +34,21 @@ const CommonFab = () => {
 };
 
 const GstSection = (
+  values: any,
+  handleInput: (name: string, value: string) => void
+) => (
   <IonGrid>
     <IonRow>
       <IonCol size="12">
         <IonItem>
           <IonLabel position="floating">GST Number</IonLabel>
-          <IonInput inputMode="text" />
+          <IonInput
+            inputMode="text"
+            onIonChange={(event) =>
+              handleInput("gstNumber", event.detail?.value || "")
+            }
+            value={values["gstNumber"]}
+          />
         </IonItem>
       </IonCol>
       <IonCol size="12">
@@ -110,7 +123,11 @@ const storeStructure: IStructure = {
     span: "12",
   },
 };
+
 const storeSection = (
+  values: any,
+  handleInput: (name: string, value: string) => void
+) => (
   <IonGrid>
     <IonRow>
       <IonCol size="12">
@@ -126,7 +143,13 @@ const storeSection = (
             <IonLabel position="floating">
               {storeStructure[item].display}
             </IonLabel>
-            <IonInput type={storeStructure[item].type}></IonInput>
+            <IonInput
+              type={storeStructure[item].type}
+              onIonChange={(event) =>
+                handleInput(item, event.detail?.value || "")
+              }
+              value={values[item]}
+            ></IonInput>
           </IonItem>
         </IonCol>
       ))}
@@ -183,6 +206,9 @@ const bankStructure: IStructure = {
   },
 };
 const BankSection = (
+  values: any,
+  handleInput: (name: string, value: string) => void
+) => (
   <IonGrid>
     <IonRow>
       {Object.keys(bankStructure).map((item) => (
@@ -191,7 +217,11 @@ const BankSection = (
             <IonLabel position="floating">
               {bankStructure[item].display}
             </IonLabel>
-            <IonInput type={bankStructure[item].type}></IonInput>
+            <IonInput
+              value={values[item]}
+              type={bankStructure[item].type}
+              onIonChange={(e) => handleInput(item, e.detail.value || "")}
+            ></IonInput>
           </IonItem>
         </IonCol>
       ))}
@@ -222,26 +252,61 @@ const BankSection = (
   </IonGrid>
 );
 
-const getSectionBySelection = (type: string) => {
+const getSectionBySelection = (
+  type: string,
+  formData: any,
+  handleInput: (parent: string, name: string, value: string) => void
+) => {
   switch (type) {
     case "gstin":
-      return GstSection;
+      return GstSection(formData[type], (...args) =>
+        handleInput(type, ...args)
+      );
     case "store":
-      return storeSection;
-    case "bank-details":
-      return BankSection;
+      return storeSection(formData[type], (...args) =>
+        handleInput(type, ...args)
+      );
+    case "bankDetails":
+      return BankSection(formData[type], (...args) =>
+        handleInput(type, ...args)
+      );
     default:
       return <></>;
   }
 };
+
+const initialForm: any = {
+  gstin: {
+    gstNumber: "",
+  },
+  store: {},
+  bankDetails: {},
+};
 const UserOnboarding = () => {
   const [selectedSegment, setSelectedSegment] = useState<string>("gstin");
-
+  const [formData, setFormData] = useState(initialForm);
   const handleSegmentChange = (
     event: CustomEvent<SegmentChangeEventDetail>
   ) => {
     setSelectedSegment(event?.detail?.value || "gstin");
   };
+
+  const handleInput = (parent: string, name: string, value: any) => {
+    if (parent) {
+      const cloneParent = { ...formData[parent] };
+      cloneParent[name] = value;
+      setFormData({ ...formData, [parent]: cloneParent });
+    }
+  };
+  useIonViewWillEnter(async () => {
+    const response = await getfromLocalDb(ONBOARDING_KEY);
+    setFormData(response);
+  }, []);
+
+  useEffect(() => {
+    setToLocalDb(ONBOARDING_KEY, formData);
+  }, [formData]);
+
   return (
     <IonPage>
       <IonHeader>
@@ -259,14 +324,14 @@ const UserOnboarding = () => {
           <IonSegmentButton value="store">
             <IonLabel>Store Details</IonLabel>
           </IonSegmentButton>
-          <IonSegmentButton value="bank-details">
+          <IonSegmentButton value="bankDetails">
             <IonLabel>Bank Details</IonLabel>
           </IonSegmentButton>
-          <IonSegmentButton value="additional-details">
+          <IonSegmentButton value="additionalDetails">
             <IonLabel>Additional Details</IonLabel>
           </IonSegmentButton>
         </IonSegment>
-        {getSectionBySelection(selectedSegment)}
+        {getSectionBySelection(selectedSegment, formData, handleInput)}
       </IonContent>
     </IonPage>
   );
