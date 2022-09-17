@@ -10,6 +10,8 @@ import {
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
+import { Provider } from "react-redux";
+import store from "./Store";
 import {
   businessOutline,
   homeOutline,
@@ -40,52 +42,55 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 import { ItemDetails } from "./pages/Items/ItemDetails";
 import { AddItem } from "./pages/Items/AddItem";
+import AppWrapper from "./components/AppWrapper";
 
 setupIonicReact();
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/home">
-            <Home />
-          </Route>
-          <Route exact path="/inventory" component={InventoryList} />
-          <Route exact path="/inventory/items/:id" component={ItemDetails} />
-          <Route exact path="/inventory/items/add" component={AddItem} />
-          <Route exact path="/inventory/items/edit/:id" component={AddItem} />
-          <Route path="/sales">
-            <Tab3 />
-          </Route>
-          <Route path="/account">
-            <Tab3 />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom" color="#fff">
-          <IonTabButton tab="tab1" href="/home">
-            <IonIcon icon={homeOutline} size={"small"} />
-            <IonLabel>Home</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab2" href="/inventory">
-            <IonIcon icon={businessOutline} size={"small"} />
-            <IonLabel>Inventory</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/sales">
-            <IonIcon icon={cashOutline} size={"small"} />
-            <IonLabel>Sales</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab4" href="/account">
-            <IonIcon icon={personOutline} size={"small"} />
-            <IonLabel>Account</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
+  <Provider store={store}>
+    <IonApp>
+      <IonReactRouter>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route exact path="/home">
+              <Home />
+            </Route>
+            <Route exact path="/inventory" component={InventoryList} />
+            <Route exact path="/inventory/items/:id" component={ItemDetails} />
+            <Route exact path="/inventory/items/add" component={AddItem} />
+            <Route exact path="/inventory/items/edit/:id" component={AddItem} />
+            <Route path="/sales">
+              <Tab3 />
+            </Route>
+            <Route path="/account">
+              <Tab3 />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom" color="#fff">
+            <IonTabButton tab="tab1" href="/home">
+              <IonIcon icon={homeOutline} size={"small"} />
+              <IonLabel>Home</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="tab2" href="/inventory">
+              <IonIcon icon={businessOutline} size={"small"} />
+              <IonLabel>Inventory</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="tab3" href="/sales">
+              <IonIcon icon={cashOutline} size={"small"} />
+              <IonLabel>Sales</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="tab4" href="/account">
+              <IonIcon icon={personOutline} size={"small"} />
+              <IonLabel>Account</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+    </IonApp>
+  </Provider>
 );
 
 export default App;

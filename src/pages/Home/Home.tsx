@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
   IonContent,
   IonHeader,
@@ -11,8 +12,14 @@ import { menuOutline, notificationsOutline } from "ionicons/icons";
 import BarChart from "../../components/BarChart";
 import Row from "../../components/Row";
 import "./Tab1.css";
+import { useSelector, useDispatch } from "react-redux";
 
 const Home: React.FC = () => {
+  const name = useSelector((state: any = {}) => state);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: "getData" });
+  }, []);
   return (
     <IonPage>
       <IonContent>
